@@ -1,8 +1,20 @@
 "use client"
 
+import dynamic from "next/dynamic"
 import { ContactForm } from "@/components/ContactForm"
 import { MapPin } from "lucide-react"
 import { useLang } from "@/context/LangContext"
+
+const Map = dynamic(() => import("@/components/Map").then((m) => m.Map), {
+  ssr: false,
+  loading: () => (
+    <div className="aspect-[21/9] w-full rounded-xl bg-gradient-to-br from-nexus-700 to-nexus-900 flex items-center justify-center">
+      <div className="h-8 w-8 animate-spin rounded-full border-2 border-amber-500 border-t-transparent" role="status">
+        <span className="sr-only">Cargando mapa...</span>
+      </div>
+    </div>
+  ),
+})
 
 export default function ContactoPage() {
   const { t } = useLang()
@@ -39,13 +51,7 @@ export default function ContactoPage() {
               <p className="text-theme-secondary mb-6 max-w-2xl">
                 {t("contact_page.map_text")}
               </p>
-              <div className="aspect-[21/9] w-full rounded-xl bg-gradient-to-br from-nexus-700 to-nexus-900 flex items-center justify-center border border-theme-border/50">
-                <div className="text-center">
-                  <MapPin className="mx-auto h-12 w-12 text-theme-accent mb-2" aria-hidden="true" />
-                  <p className="text-slate-300 font-medium">Rancagua, Chile</p>
-                  <p className="text-sm text-slate-500">Cobertura en todo el país</p>
-                </div>
-              </div>
+              <Map />
             </div>
           </div>
         </div>

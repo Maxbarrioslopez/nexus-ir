@@ -38,6 +38,7 @@ export function Footer() {
                 { href: "/", label: "nav.inicio" },
                 { href: "/servicios", label: "nav.servicios" },
                 { href: "/galeria", label: "nav.galeria" },
+                { href: "/blog", label: "nav.blog" },
                 { href: "/contacto", label: "nav.contacto" },
               ].map((link) => (
                 <li key={link.href}>

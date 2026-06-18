@@ -4,6 +4,8 @@ const nextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "**" },
     ],
+    formats: ["image/webp", "image/avif"],
+    deviceSizes: [640, 768, 1024, 1280, 1536],
   },
 }
 

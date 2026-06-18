@@ -1,9 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Star, MessageSquare } from "lucide-react"
-import { testimonials } from "@/data/testimonials"
-import { submitTestimonial } from "@/lib/supabase"
+import { testimonials as staticTestimonials, type Testimonial } from "@/data/testimonials"
+import { submitTestimonial, supabase } from "@/lib/supabase"
 import { useLang } from "@/context/LangContext"
 
 function Stars({ rating, interactive, onChange }: {
@@ -41,8 +41,33 @@ function Stars({ rating, interactive, onChange }: {
 export function TestimonialsSection() {
   const { t } = useLang()
   const [showForm, setShowForm] = useState(false)
+  const [dynamicTestimonials, setDynamicTestimonials] = useState<Testimonial[]>([])
   const [formData, setFormData] = useState({ name: "", rating: 5, message: "" })
   const [formStatus, setFormStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
+
+  useEffect(() => {
+    if (!supabase) return
+    supabase
+      .from("testimonials")
+      .select("*")
+      .eq("visible", true)
+      .order("created_at", { ascending: false })
+      .then(({ data }) => {
+        if (data) {
+          const mapped: Testimonial[] = data.map((d) => ({
+            id: `db-${d.id}`,
+            name: d.name,
+            rating: d.rating,
+            message: d.message,
+            service: "",
+            date: d.created_at?.slice(0, 10) || "",
+          }))
+          setDynamicTestimonials(mapped)
+        }
+      })
+  }, [])
+
+  const allTestimonials = [...dynamicTestimonials, ...staticTestimonials]
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -69,7 +94,7 @@ export function TestimonialsSection() {
         </div>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {testimonials.map((item) => (
+          {allTestimonials.map((item) => (
             <article
               key={item.id}
               className="rounded-2xl border border-theme-border bg-theme-bg p-6"
@@ -84,7 +109,9 @@ export function TestimonialsSection() {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-theme-text">{item.name}</p>
-                  <p className="text-xs text-theme-secondary">{item.service}</p>
+                  {item.service && (
+                    <p className="text-xs text-theme-secondary">{item.service}</p>
+                  )}
                 </div>
               </div>
             </article>

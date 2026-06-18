@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/", labelKey: "nav.inicio" },
   { href: "/servicios", labelKey: "nav.servicios" },
   { href: "/galeria", labelKey: "nav.galeria" },
+  { href: "/blog", labelKey: "nav.blog" },
   { href: "/contacto", labelKey: "nav.contacto" },
 ]
 
