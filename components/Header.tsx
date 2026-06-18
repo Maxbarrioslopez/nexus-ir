@@ -54,15 +54,16 @@ export function Header() {
           <div className="ml-2 flex items-center gap-2">
             <button
               onClick={() => setShowAccessibility(!showAccessibility)}
-              className="rounded-lg p-2 text-theme-secondary hover:bg-theme-surface-2 hover:text-theme-text transition-colors"
+              className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-theme-secondary hover:bg-theme-surface-2 hover:text-theme-text transition-colors border border-theme-border"
               aria-label="Accesibilidad"
               title="Accesibilidad"
             >
-              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <circle cx="12" cy="12" r="10" />
                 <path d="M12 8v4" />
                 <path d="M12 16h.01" />
               </svg>
+              <span>Accesibilidad</span>
             </button>
             <Link
               href="/contacto"
@@ -76,14 +77,15 @@ export function Header() {
         <div className="flex items-center gap-2 md:hidden">
           <button
             onClick={() => setShowAccessibility(!showAccessibility)}
-            className="rounded-lg p-2 text-theme-secondary hover:bg-theme-surface-2 transition-colors"
+            className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-theme-secondary hover:bg-theme-surface-2 transition-colors border border-theme-border"
             aria-label="Accesibilidad"
           >
-            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <circle cx="12" cy="12" r="10" />
               <path d="M12 8v4" />
               <path d="M12 16h.01" />
             </svg>
+            <span>Accesibilidad</span>
           </button>
           <button
             onClick={() => setOpen(!open)}

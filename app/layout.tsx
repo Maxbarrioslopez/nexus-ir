@@ -5,6 +5,7 @@ import { Providers } from "./providers"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { WhatsAppButton } from "@/components/WhatsAppButton"
+import { services } from "@/data/services"
 import {
   SITE_URL,
   COMPANY_NAME,
@@ -125,18 +126,11 @@ export default function RootLayout({
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Servicios de Seguridad Electrónica",
-      itemListElement: [
-        "Cámaras de Seguridad",
-        "Cercos Eléctricos",
-        "Alarmas y Sensores",
-        "Redes y Cableado Estructurado",
-        "Automatización Inteligente",
-        "Certificación de Puntos",
-      ].map((name) => ({
+      itemListElement: services.map((s) => ({
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
-          name,
+          name: s.title,
         },
       })),
     },

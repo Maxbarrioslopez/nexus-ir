@@ -57,7 +57,7 @@ export function Footer() {
               {t("footer.services_title")}
             </h3>
             <ul className="space-y-2.5">
-              {services.slice(0, 5).map((s) => (
+              {services.map((s) => (
                 <li key={s.id}>
                   <Link
                     href={`/servicios#${s.id}`}
