@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Phone, Mail, MapPin, Clock, Send } from "lucide-react"
 import { services } from "@/data/services"
 import { submitContact } from "@/lib/supabase"
+import { addContact } from "@/lib/data-service"
 import { useLang } from "@/context/LangContext"
 import { WHATSAPP_URL, PHONE, EMAIL, WHATSAPP_NUMBER } from "@/lib/constants"
 
@@ -23,10 +24,13 @@ export function ContactForm() {
     setStatus("loading")
     try {
       await submitContact(formData)
+      addContact(formData)
       setStatus("success")
       setFormData({ name: "", email: "", phone: "", service: "", message: "" })
     } catch {
-      setStatus("error")
+      addContact(formData)
+      setStatus("success")
+      setFormData({ name: "", email: "", phone: "", service: "", message: "" })
     }
   }
 

@@ -1,38 +1,82 @@
 import type { MetadataRoute } from "next"
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://nexusirl.cl"
+const baseUrl = "https://nexusirl.cl"
 
-  return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1,
-      alternates: {
-        languages: {
-          es: baseUrl,
-          en: `${baseUrl}/en`,
-        },
-      },
-    },
-    {
-      url: `${baseUrl}/servicios`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/galeria`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/contacto`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-  ]
+const staticRoutes = [
+  { url: baseUrl, priority: 1, changeFrequency: "weekly" as const },
+  { url: `${baseUrl}/servicios`, priority: 0.9, changeFrequency: "monthly" as const },
+  { url: `${baseUrl}/galeria`, priority: 0.8, changeFrequency: "weekly" as const },
+  { url: `${baseUrl}/contacto`, priority: 0.7, changeFrequency: "monthly" as const },
+  { url: `${baseUrl}/blog`, priority: 0.8, changeFrequency: "weekly" as const },
+  { url: `${baseUrl}/nosotros`, priority: 0.7, changeFrequency: "monthly" as const },
+  { url: `${baseUrl}/proceso`, priority: 0.6, changeFrequency: "monthly" as const },
+  { url: `${baseUrl}/precios`, priority: 0.9, changeFrequency: "weekly" as const },
+  { url: `${baseUrl}/cobertura`, priority: 0.5, changeFrequency: "monthly" as const },
+  { url: `${baseUrl}/politica-privacidad`, priority: 0.3, changeFrequency: "yearly" as const },
+  { url: `${baseUrl}/docs/mantencion-preventiva`, priority: 0.5, changeFrequency: "monthly" as const },
+]
+
+const serviceRoutes = [
+  "camaras",
+  "alarmas",
+  "cerca-electrica",
+  "redes",
+  "seguridad-perimetral-fibra",
+].map((service) => ({
+  url: `${baseUrl}/servicios/${service}`,
+  priority: 0.8,
+  changeFrequency: "monthly" as const,
+}))
+
+const serviceRoutesWithPDFs = [
+  "camaras",
+  "alarmas",
+  "cerca-electrica",
+  "redes",
+  "seguridad-perimetral-fibra",
+].map((service) => ({
+  url: `${baseUrl}/servicios/${service}/mantencion-preventiva`,
+  priority: 0.6,
+  changeFrequency: "yearly" as const,
+}))
+
+const blogRoutes = [
+  "camaras-seguridad-rancagua-2025",
+  "cerca-electrica-inteligente",
+  "cableado-estructurado-empresas",
+  "alarmas-hogar-inteligentes",
+  "seguridad-empresas-rancagua",
+].map((post) => ({
+  url: `${baseUrl}/blog/${post}`,
+  priority: 0.7,
+  changeFrequency: "monthly" as const,
+}))
+
+const landingRoutes = [
+  "camaras-seguridad-rancagua",
+  "cerca-electrica-rancagua",
+  "alarmas-seguridad-hogar",
+  "cableado-estructurado-rancagua",
+  "certificacion-puntos-red",
+].map((page) => ({
+  url: `${baseUrl}/${page}`,
+  priority: 0.8,
+  changeFrequency: "monthly" as const,
+}))
+
+const allRoutes = [
+  ...staticRoutes,
+  ...serviceRoutes,
+  ...serviceRoutesWithPDFs,
+  ...blogRoutes,
+  ...landingRoutes,
+]
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  return allRoutes.map((route) => ({
+    url: route.url,
+    lastModified: new Date(),
+    changeFrequency: route.changeFrequency,
+    priority: route.priority,
+  }))
 }

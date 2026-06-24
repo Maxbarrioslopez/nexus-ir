@@ -6,6 +6,7 @@ import { Providers } from "./providers"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { WhatsAppButton } from "@/components/WhatsAppButton"
+import { CookieConsent } from "@/components/CookieConsent"
 import { services } from "@/data/services"
 import { faqItems } from "@/data/faq"
 import {
@@ -186,6 +187,7 @@ export default function RootLayout({
             <Footer />
           </div>
           <WhatsAppButton />
+          <CookieConsent />
         </Providers>
       </body>
     </html>
