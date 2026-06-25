@@ -26,12 +26,12 @@ const typeConfig = {
 export default function CoberturaPage() {
   return (
     <>
-      <section className="bg-gradient-to-br from-nexus-900 via-nexus-800 to-nexus-700 py-16 sm:py-24">
+      <section className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
             Cobertura
           </h1>
-          <p className="mt-4 text-lg text-slate-300 max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-slate-400 max-w-2xl mx-auto">
             Más de una década protegiendo hogares y empresas en todo Chile.
             Conoce nuestras zonas de cobertura.
           </p>
@@ -40,7 +40,7 @@ export default function CoberturaPage() {
 
       <section className="bg-theme-bg py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-2xl bg-gradient-to-br from-nexus-900 via-nexus-800 to-nexus-700 border border-theme-border/50 overflow-hidden">
+          <div className="rounded-2xl bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 border border-theme-border/50 overflow-hidden">
             <div className="aspect-[21/9] relative flex items-center justify-center">
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(251,191,36,0.08)_0%,_transparent_70%)]" />
               <div className="relative flex flex-col items-center gap-4">

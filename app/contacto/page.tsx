@@ -8,7 +8,7 @@ import { useLang } from "@/context/LangContext"
 const Map = dynamic(() => import("@/components/Map").then((m) => m.Map), {
   ssr: false,
   loading: () => (
-    <div className="aspect-[21/9] w-full rounded-xl bg-gradient-to-br from-nexus-700 to-nexus-900 flex items-center justify-center">
+    <div className="aspect-[21/9] w-full rounded-2xl bg-slate-800 flex items-center justify-center">
       <div className="h-8 w-8 animate-spin rounded-full border-2 border-amber-500 border-t-transparent" role="status">
         <span className="sr-only">Cargando mapa...</span>
       </div>
@@ -21,34 +21,37 @@ export default function ContactoPage() {
 
   return (
     <>
-      <section className="bg-gradient-to-br from-nexus-900 via-nexus-800 to-nexus-700 py-16 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 pt-32 pb-16 sm:pt-40 sm:pb-20">
+        <div className="absolute inset-0 bg-grid" aria-hidden="true" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
             {t("contact_page.title")}
           </h1>
-          <p className="mt-4 text-lg text-slate-300 max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-slate-400 max-w-2xl mx-auto">
             {t("contact_page.subtitle")}
           </p>
         </div>
       </section>
 
-      <section className="bg-theme-surface py-16 sm:py-24">
+      <section className="section-padding bg-slate-950">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <ContactForm />
+          <div className="glass rounded-2xl p-8 sm:p-10">
+            <ContactForm />
+          </div>
         </div>
       </section>
 
-      <section className="bg-theme-bg py-16">
+      <section className="section-padding">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-2xl border border-theme-border bg-theme-surface overflow-hidden">
+          <div className="rounded-2xl border border-white/5 bg-white/[0.02] overflow-hidden">
             <div className="p-8 sm:p-12">
               <div className="flex items-center gap-3 mb-4">
-                <MapPin className="h-6 w-6 text-theme-accent" aria-hidden="true" />
-                <h2 className="text-2xl font-bold text-theme-text">
+                <MapPin className="h-6 w-6 text-amber-500" />
+                <h2 className="text-2xl font-bold text-white">
                   {t("contact_page.map_title")}
                 </h2>
               </div>
-              <p className="text-theme-secondary mb-6 max-w-2xl">
+              <p className="text-slate-400 mb-6 max-w-2xl">
                 {t("contact_page.map_text")}
               </p>
               <Map />

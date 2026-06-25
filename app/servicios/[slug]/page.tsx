@@ -37,11 +37,11 @@ export default function ServiceDetailPage({ params }: Props) {
 
   return (
     <>
-      <section className="bg-gradient-to-br from-nexus-900 via-nexus-800 to-nexus-700 py-16 sm:py-24">
+      <section className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Link
             href="/servicios"
-            className="inline-flex items-center gap-1.5 text-sm text-slate-300 hover:text-white transition-colors mb-6"
+            className="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors mb-6"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             Volver a Servicios
@@ -52,23 +52,23 @@ export default function ServiceDetailPage({ params }: Props) {
                 <Icon className="h-7 w-7" aria-hidden="true" />
               </div>
               <h1 className="text-3xl font-bold text-white sm:text-4xl">{service.title}</h1>
-              <p className="mt-4 text-lg text-slate-300 leading-relaxed">{service.description}</p>
+              <p className="mt-4 text-lg text-slate-400 leading-relaxed">{service.description}</p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {service.forHome && service.forBusiness && (
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-slate-300">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-slate-400">
                     <Home className="h-3.5 w-3.5" aria-hidden="true" />
                     <Building2 className="h-3.5 w-3.5" aria-hidden="true" />
                     Hogar y Empresa
                   </span>
                 )}
                 {service.forHome && !service.forBusiness && (
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-slate-300">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-slate-400">
                     <Home className="h-3.5 w-3.5" aria-hidden="true" />
                     Solo Hogar
                   </span>
                 )}
                 {!service.forHome && service.forBusiness && (
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-slate-300">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-slate-400">
                     <Building2 className="h-3.5 w-3.5" aria-hidden="true" />
                     Solo Empresa
                   </span>

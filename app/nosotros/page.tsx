@@ -32,12 +32,12 @@ const statIcons = [
 export default function NosotrosPage() {
   return (
     <>
-      <section className="bg-gradient-to-br from-nexus-900 via-nexus-800 to-nexus-700 py-16 sm:py-24">
+      <section className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
             Sobre Nosotros
           </h1>
-          <p className="mt-4 text-lg text-slate-300 max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-slate-400 max-w-2xl mx-auto">
             Conoce nuestra historia, nuestros valores y el equipo que hace
             posible la seguridad de tu hogar o empresa.
           </p>
@@ -169,7 +169,7 @@ export default function NosotrosPage() {
         </div>
       </section>
 
-      <section className="bg-gradient-to-br from-nexus-900 via-nexus-800 to-nexus-700 py-16 sm:py-24">
+      <section className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl">
             <div className="flex flex-col items-center text-center">
@@ -179,7 +179,7 @@ export default function NosotrosPage() {
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                 Nuestra Tecnología
               </h2>
-              <p className="mt-4 text-lg text-slate-300">
+              <p className="mt-4 text-lg text-slate-400">
                 Trabajamos con la tecnología de detección más avanzada del
                 mercado.
               </p>
@@ -201,7 +201,7 @@ export default function NosotrosPage() {
                   Fibra Óptica
                 </span>
               </div>
-              <p className="mt-4 text-sm text-slate-300 leading-relaxed">
+              <p className="mt-4 text-sm text-slate-400 leading-relaxed">
                 {companyInfo.technology.description}
               </p>
             </div>

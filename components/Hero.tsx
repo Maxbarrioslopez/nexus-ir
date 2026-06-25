@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Shield, Award, BadgeCheck, Coins } from "lucide-react"
+import { Shield, Award, BadgeCheck, Coins, ArrowRight } from "lucide-react"
 import { useLang } from "@/context/LangContext"
 
 const badges = [
@@ -15,48 +15,54 @@ export function Hero() {
   const { t } = useLang()
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-nexus-900 via-nexus-800 to-nexus-700">
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMSIvPjwvZz48L2c+PC9zdmc+')] opacity-40" aria-hidden="true" />
-      <div className="absolute inset-0 bg-gradient-to-t from-nexus-900/80 via-transparent to-transparent" aria-hidden="true" />
+    <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800">
+      <div className="absolute inset-0 bg-grid" aria-hidden="true" />
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent" aria-hidden="true" />
 
-      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8 lg:py-36">
+      <div className="absolute top-1/4 -left-32 h-96 w-96 rounded-full bg-amber-500/5 blur-3xl" aria-hidden="true" />
+      <div className="absolute bottom-1/4 -right-32 h-80 w-80 rounded-full bg-amber-500/3 blur-3xl" aria-hidden="true" />
+
+      <div className="relative mx-auto max-w-7xl px-4 pt-32 pb-20 sm:px-6 sm:pt-40 sm:pb-28 lg:px-8 lg:pt-48 lg:pb-36">
         <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-4 py-1.5 text-sm text-amber-400 mb-6">
+          <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-4 py-1.5 text-sm text-amber-400 mb-8 animate-fade-in">
             <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse" aria-hidden="true" />
             Empresa certificada — Rancagua, Chile
           </div>
 
-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl text-balance animate-fade-in-up">
             {t("hero.title")}
           </h1>
-          <p className="mt-6 text-lg leading-relaxed text-slate-300 sm:text-xl max-w-2xl">
+          <p className="mt-6 text-lg leading-relaxed text-slate-300 sm:text-xl max-w-2xl animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
             {t("hero.subtitle")}
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-4">
+          <div className="mt-8 flex flex-wrap gap-4 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
             <Link
               href="/contacto"
-              className="inline-flex items-center rounded-xl bg-amber-500 px-6 py-3 text-base font-semibold text-nexus-900 shadow-lg transition-all hover:bg-amber-400 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 focus-visible:ring-offset-nexus-900"
+              className="btn-primary inline-flex items-center gap-2"
             >
               {t("hero.cta_primary")}
-              <svg className="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
+              <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
               href="/servicios"
-              className="inline-flex items-center rounded-xl border border-slate-500/50 bg-white/5 px-6 py-3 text-base font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+              className="btn-secondary inline-flex items-center gap-2"
             >
               {t("hero.cta_secondary")}
             </Link>
           </div>
 
-          <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+          <div className="mt-16 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4 animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
             {badges.map((badge) => {
               const Icon = badge.icon
               return (
-                <div key={badge.key} className="flex items-center gap-2.5 rounded-xl bg-white/5 px-4 py-3 backdrop-blur-sm">
-                  <Icon className="h-5 w-5 shrink-0 text-amber-400" aria-hidden="true" />
+                <div
+                  key={badge.key}
+                  className="flex items-center gap-2.5 rounded-2xl border border-white/5 bg-white/[0.03] px-4 py-3.5 backdrop-blur-sm hover:bg-white/[0.06] hover:border-white/10 transition-all"
+                >
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500/10 shrink-0">
+                    <Icon className="h-4 w-4 text-amber-400" aria-hidden="true" />
+                  </div>
                   <span className="text-sm font-medium text-slate-200">
                     {t(badge.key)}
                   </span>

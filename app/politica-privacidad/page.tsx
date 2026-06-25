@@ -189,7 +189,7 @@ const sections = [
 export default function PoliticaPrivacidadPage() {
   return (
     <>
-      <section className="bg-gradient-to-br from-nexus-900 via-nexus-800 to-nexus-700 py-16 sm:py-24">
+      <section className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <div className="flex justify-center mb-6">
             <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-500">
@@ -199,7 +199,7 @@ export default function PoliticaPrivacidadPage() {
           <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
             Política de Privacidad y Tratamiento de Datos
           </h1>
-          <p className="mt-4 text-lg text-slate-300 max-w-3xl mx-auto">
+          <p className="mt-4 text-lg text-slate-400 max-w-3xl mx-auto">
             En NEXUS IRL Security Chile nos tomamos en serio tu privacidad. Esta política describe
             cómo recopilamos, usamos y protegemos tu información personal de acuerdo con la
             legislación chilena.

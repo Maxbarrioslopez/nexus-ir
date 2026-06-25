@@ -11,13 +11,13 @@ export default function HomePage() {
 
       <ServicesSection />
 
-      <section className="bg-theme-bg py-16 sm:py-24">
+      <section className="section-padding" id="galeria">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-theme-text sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               Trabajos Recientes
             </h2>
-            <p className="mt-4 text-lg text-theme-secondary">
+            <p className="mt-4 text-lg text-slate-400">
               Conoce algunos de nuestros proyectos recientes en Rancagua y todo Chile.
             </p>
           </div>
@@ -27,17 +27,17 @@ export default function HomePage() {
 
       <TestimonialsSection />
 
-      <section className="bg-theme-bg py-16 sm:py-24" id="contacto">
+      <section className="section-padding bg-slate-950" id="contacto">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-theme-text sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               Contáctanos
             </h2>
-            <p className="mt-4 text-lg text-theme-secondary">
+            <p className="mt-4 text-lg text-slate-400">
               Cuéntanos qué necesitas y te enviaremos una cotización clara y sin compromiso.
             </p>
           </div>
-          <div className="mt-12">
+          <div className="mt-12 glass rounded-2xl p-8 sm:p-10">
             <ContactForm />
           </div>
         </div>

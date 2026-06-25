@@ -8,6 +8,7 @@ export interface Contact {
   status: "new" | "read" | "replied"
   created_at: string
   notes?: string
+  password?: string
 }
 
 export interface StoredTestimonial {
@@ -57,7 +58,7 @@ export function getContacts(): Contact[] {
   return getFromStorage<Contact[]>(STORAGE_KEYS.contacts, [])
 }
 
-export function addContact(data: Omit<Contact, "id" | "status" | "created_at">): Contact {
+export function addContact(data: Omit<Contact, "id" | "status" | "created_at"> & { password?: string }): Contact {
   const contacts = getContacts()
   const newContact: Contact = {
     ...data,
@@ -68,6 +69,15 @@ export function addContact(data: Omit<Contact, "id" | "status" | "created_at">):
   contacts.unshift(newContact)
   setToStorage(STORAGE_KEYS.contacts, contacts)
   return newContact
+}
+
+export function verifyContactCredentials(email: string, password: string): boolean {
+  const contacts = getContacts()
+  return contacts.some((c) => c.email === email && c.password === password)
+}
+
+export function getContactByEmail(email: string): Contact | undefined {
+  return getContacts().find((c) => c.email === email)
 }
 
 export function updateContactStatus(id: string, status: Contact["status"]): void {

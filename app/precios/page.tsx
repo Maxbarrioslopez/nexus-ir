@@ -6,7 +6,7 @@ import { Check, Camera, Shield, Zap, Network, Radio, ChevronDown, ArrowRight } f
 import { pricingTiers, type PricingTier } from "@/data/pricing"
 import { services, getServiceIcon } from "@/data/services"
 
-const serviceIds = ["camaras", "alarmas", "cerca-electrica", "redes", "seguridad-perimetral-fibra"] as const
+const serviceIds = ["camaras", "alarmas", "cerco-perimetral", "redes", "seguridad-perimetral-fibra"] as const
 type ServiceId = (typeof serviceIds)[number]
 
 const typeLabels: Record<PricingTier["type"], string> = {
@@ -41,12 +41,12 @@ export default function PreciosPage() {
 
   return (
     <>
-      <section className="bg-gradient-to-br from-nexus-900 via-nexus-800 to-nexus-700 py-16 sm:py-24">
+      <section className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
             Planes y Precios
           </h1>
-          <p className="mt-4 text-lg text-slate-300 max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-slate-400 max-w-2xl mx-auto">
             Soluciones de seguridad para todo tipo de necesidades y presupuestos
           </p>
         </div>

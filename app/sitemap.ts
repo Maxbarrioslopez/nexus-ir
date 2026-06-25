@@ -19,7 +19,7 @@ const staticRoutes = [
 const serviceRoutes = [
   "camaras",
   "alarmas",
-  "cerca-electrica",
+  "cerco-perimetral",
   "redes",
   "seguridad-perimetral-fibra",
 ].map((service) => ({
@@ -31,7 +31,7 @@ const serviceRoutes = [
 const serviceRoutesWithPDFs = [
   "camaras",
   "alarmas",
-  "cerca-electrica",
+  "cerco-perimetral",
   "redes",
   "seguridad-perimetral-fibra",
 ].map((service) => ({
@@ -42,7 +42,7 @@ const serviceRoutesWithPDFs = [
 
 const blogRoutes = [
   "camaras-seguridad-rancagua-2025",
-  "cerca-electrica-inteligente",
+  "cerco-perimetral-inteligente",
   "cableado-estructurado-empresas",
   "alarmas-hogar-inteligentes",
   "seguridad-empresas-rancagua",
@@ -54,7 +54,7 @@ const blogRoutes = [
 
 const landingRoutes = [
   "camaras-seguridad-rancagua",
-  "cerca-electrica-rancagua",
+  "cerco-perimetral-rancagua",
   "alarmas-seguridad-hogar",
   "cableado-estructurado-rancagua",
   "certificacion-puntos-red",

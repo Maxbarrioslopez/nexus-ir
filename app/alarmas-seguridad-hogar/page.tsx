@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function AlarmasHogarPage() {
   return (
     <>
-      <section className="bg-gradient-to-br from-nexus-900 via-nexus-800 to-nexus-700 py-20">
+      <section className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-4 py-1.5 text-sm text-amber-400 mb-6">
@@ -19,12 +19,12 @@ export default function AlarmasHogarPage() {
               Seguridad inteligente para tu familia
             </div>
             <h1 className="text-4xl font-bold text-white sm:text-5xl">Alarmas Inteligentes para el Hogar</h1>
-            <p className="mt-4 text-lg text-slate-300">
+            <p className="mt-4 text-lg text-slate-400">
               Protege a tu familia con sistemas de alarma monitoreados 24/7. Sensores inteligentes, 
               notificaciones en tiempo real y control total desde tu celular.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/contacto" className="inline-flex items-center gap-2 rounded-xl bg-amber-500 px-6 py-3 font-semibold text-nexus-900 hover:bg-amber-400 transition-colors">
+              <Link href="/contacto" className="inline-flex items-center gap-2 rounded-xl bg-amber-500 px-6 py-3 font-semibold text-slate-900 hover:bg-amber-400 transition-colors">
                 Cotiza Ahora <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
               <Link href="/precios" className="inline-flex items-center gap-2 rounded-xl border border-slate-500/50 bg-white/5 px-6 py-3 font-semibold text-white hover:bg-white/10 transition-colors">
@@ -82,7 +82,7 @@ export default function AlarmasHogarPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl font-bold text-theme-text">Protege lo que más importa</h2>
           <p className="mt-3 text-lg text-theme-secondary max-w-xl mx-auto">Cotiza hoy tu sistema de alarma inteligente.</p>
-          <Link href="/contacto" className="mt-6 inline-flex items-center gap-2 rounded-xl bg-amber-500 px-6 py-3 font-semibold text-nexus-900 hover:bg-amber-400 transition-colors">
+          <Link href="/contacto" className="mt-6 inline-flex items-center gap-2 rounded-xl bg-amber-500 px-6 py-3 font-semibold text-slate-900 hover:bg-amber-400 transition-colors">
             Cotizar Ahora <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
         </div>

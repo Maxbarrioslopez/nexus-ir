@@ -9,7 +9,7 @@ export interface GalleryItem {
 export const galleryCategories = [
   { id: "todas", label: "Todas" },
   { id: "camaras", label: "Cámaras" },
-  { id: "cerca", label: "Cerca Eléctrica" },
+  { id: "cerco", label: "Cerco Perimetral" },
   { id: "redes", label: "Redes" },
   { id: "automatizacion", label: "Automatización" },
   { id: "comercial", label: "Comercial" },
@@ -26,9 +26,9 @@ export const galleryItems: GalleryItem[] = [
   {
     id: "trabajo-2",
     title: "Cerca Eléctrica Perimetral",
-    category: "cerca",
-    categoryEs: "Cerca Eléctrica",
-    description: "Cerca eléctrica con programación inteligente para condominio.",
+    category: "cerco",
+    categoryEs: "Cerco Perimetral",
+    description: "Cerco perimetral con programación inteligente para condominio.",
   },
   {
     id: "trabajo-3",
@@ -68,9 +68,9 @@ export const galleryItems: GalleryItem[] = [
   {
     id: "trabajo-8",
     title: "Cerca Eléctrica Bodega",
-    category: "cerca",
-    categoryEs: "Cerca Eléctrica",
-    description: "Sistema de cerca eléctrica con 6 hilos para bodega de 2000m².",
+    category: "cerco",
+    categoryEs: "Cerco Perimetral",
+    description: "Sistema de cerco perimetral con 6 hilos para bodega de 2000m².",
   },
   {
     id: "trabajo-9",

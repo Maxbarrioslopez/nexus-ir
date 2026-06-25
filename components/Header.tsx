@@ -1,139 +1,124 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Shield, Menu, X } from "lucide-react"
-import { useLang } from "@/context/LangContext"
-import { AccessibilityPanel } from "./AccessibilityPanel"
+import { Shield, Menu, X, ChevronDown } from "lucide-react"
 
 const navLinks = [
-  { href: "/", labelKey: "nav.inicio" },
-  { href: "/servicios", labelKey: "nav.servicios" },
-  { href: "/galeria", labelKey: "nav.galeria" },
-  { href: "/blog", labelKey: "nav.blog" },
-  { href: "/contacto", labelKey: "nav.contacto" },
+  { href: "/", label: "Inicio" },
+  { href: "/servicios", label: "Servicios" },
+  { href: "/precios", label: "Precios" },
+  { href: "/galeria", label: "Galería" },
+  { href: "/blog", label: "Blog" },
+  { href: "/contacto", label: "Contacto" },
 ]
 
 export function Header() {
-  const [open, setOpen] = useState(false)
-  const [showAccessibility, setShowAccessibility] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
-  const { t } = useLang()
 
-  const isActive = (href: string) => {
-    if (href === "/") return pathname === "/"
-    return pathname.startsWith(href)
-  }
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10)
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [pathname])
+
+  const isHome = pathname === "/"
 
   return (
-    <header className="sticky top-0 z-50 border-b border-theme-border bg-theme-bg/95 backdrop-blur supports-[backdrop-filter]:bg-theme-bg/75">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2 group" aria-label={t("nav.inicio")}>
-          <Shield className="h-8 w-8 text-theme-accent transition-transform group-hover:scale-110" aria-hidden="true" />
-          <span className="text-xl font-bold tracking-tight text-theme-text">
-            NEXUS <span className="text-theme-accent">IRL</span>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled || !isHome
+          ? "glass-strong"
+          : "bg-transparent"
+      }`}
+    >
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:py-4">
+        <Link
+          href="/"
+          className="flex items-center gap-2.5 group"
+        >
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-500/10 group-hover:bg-amber-500/20 transition-colors">
+            <Shield className="h-5 w-5 text-amber-500" />
+          </div>
+          <span className="text-lg font-bold text-white tracking-tight">
+            NETXUS
           </span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-1" role="navigation" aria-label="Main navigation">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`relative px-4 py-2 text-sm font-medium transition-colors rounded-lg
-                ${
-                  isActive(link.href)
-                    ? "text-theme-accent"
-                    : "text-theme-secondary hover:text-theme-text hover:bg-theme-surface-2"
-                }`}
-              aria-current={isActive(link.href) ? "page" : undefined}
-            >
-              {t(link.labelKey)}
-            </Link>
-          ))}
-          <div className="ml-2 flex items-center gap-2">
-            <button
-              onClick={() => setShowAccessibility(!showAccessibility)}
-              className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-theme-secondary hover:bg-theme-surface-2 hover:text-theme-text transition-colors border border-theme-border"
-              aria-label="Accesibilidad"
-              title="Accesibilidad"
-            >
-              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" />
-                <path d="M12 8v4" />
-                <path d="M12 16h.01" />
-              </svg>
-              <span>Accesibilidad</span>
-            </button>
-            <Link
-              href="/contacto"
-              className="rounded-lg bg-theme-accent px-5 py-2 text-sm font-semibold text-white shadow-sm transition-all hover:bg-theme-accent-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent focus-visible:ring-offset-2"
-            >
-              {t("nav.cotizar")}
-            </Link>
-          </div>
-        </nav>
-
-        <div className="flex items-center gap-2 md:hidden">
-          <button
-            onClick={() => setShowAccessibility(!showAccessibility)}
-            className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-theme-secondary hover:bg-theme-surface-2 transition-colors border border-theme-border"
-            aria-label="Accesibilidad"
-          >
-            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" />
-              <path d="M12 8v4" />
-              <path d="M12 16h.01" />
-            </svg>
-            <span>Accesibilidad</span>
-          </button>
-          <button
-            onClick={() => setOpen(!open)}
-            className="rounded-lg p-2 text-theme-secondary hover:bg-theme-surface-2 transition-colors"
-            aria-label={open ? "Cerrar menú" : "Abrir menú"}
-            aria-expanded={open}
-          >
-            {open ? <X className="h-6 w-6" aria-hidden="true" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
-          </button>
-        </div>
-      </div>
-
-      {open && (
-        <nav className="md:hidden border-t border-theme-border bg-theme-bg" role="navigation" aria-label="Mobile navigation">
-          <div className="space-y-1 px-4 py-4">
-            {navLinks.map((link) => (
+        <div className="hidden md:flex items-center gap-1">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href || pathname.startsWith(link.href + "/")
+            return (
               <Link
                 key={link.href}
                 href={link.href}
-                onClick={() => setOpen(false)}
-                className={`block rounded-lg px-4 py-3 text-base font-medium transition-colors
-                  ${
-                    isActive(link.href)
-                      ? "text-theme-accent bg-theme-surface-2"
-                      : "text-theme-secondary hover:text-theme-text hover:bg-theme-surface-2"
-                  }`}
-                aria-current={isActive(link.href) ? "page" : undefined}
+                className={`relative rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                  isActive
+                    ? "text-amber-400 bg-amber-500/10"
+                    : "text-slate-300 hover:text-white hover:bg-white/5"
+                }`}
               >
-                {t(link.labelKey)}
+                {link.label}
+                {isActive && (
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 w-4 rounded-full bg-amber-500" />
+                )}
               </Link>
-            ))}
-            <Link
-              href="/contacto"
-              onClick={() => setOpen(false)}
-              className="block rounded-lg bg-theme-accent px-4 py-3 text-center text-base font-semibold text-white mt-4"
-            >
-              {t("nav.cotizar")}
-            </Link>
-          </div>
-        </nav>
-      )}
-
-      {showAccessibility && (
-        <div className="absolute right-4 top-16 z-50 w-72 rounded-xl border border-theme-border bg-theme-bg shadow-2xl">
-          <AccessibilityPanel onClose={() => setShowAccessibility(false)} />
+            )
+          })}
+          <Link
+            href="/admin"
+            className="ml-3 rounded-xl border border-amber-500/30 px-5 py-2 text-sm font-medium text-amber-400 transition-all hover:bg-amber-500/10 hover:border-amber-500/50"
+          >
+            Admin
+          </Link>
         </div>
-      )}
+
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="md:hidden flex h-10 w-10 items-center justify-center rounded-xl text-slate-300 hover:bg-white/5 transition-colors"
+          aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+        >
+          {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
+      </nav>
+
+      <div
+        className={`md:hidden transition-all duration-300 overflow-hidden ${
+          menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className="border-t border-white/5 bg-slate-950/95 backdrop-blur-xl px-4 py-3 space-y-1">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href || pathname.startsWith(link.href + "/")
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`block rounded-xl px-4 py-2.5 text-sm font-medium transition-all ${
+                  isActive
+                    ? "text-amber-400 bg-amber-500/10"
+                    : "text-slate-300 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                {link.label}
+              </Link>
+            )
+          })}
+          <Link
+            href="/admin"
+            className="block rounded-xl border border-amber-500/30 px-4 py-2.5 text-sm font-medium text-amber-400 text-center mt-2"
+          >
+            Panel Admin
+          </Link>
+        </div>
+      </div>
     </header>
   )
 }

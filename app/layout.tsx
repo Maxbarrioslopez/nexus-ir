@@ -183,7 +183,7 @@ export default function RootLayout({
         <Providers>
           <div className="flex min-h-screen flex-col">
             <Header />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 pt-16 lg:pt-20">{children}</main>
             <Footer />
           </div>
           <WhatsAppButton />

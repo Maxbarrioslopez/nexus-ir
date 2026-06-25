@@ -2,7 +2,7 @@
 
 import { useRef, useState, useCallback, useEffect } from "react"
 import Link from "next/link"
-import { ChevronLeft, ChevronRight, Home, Building2 } from "lucide-react"
+import { ChevronLeft, ChevronRight, Home, Building2, ArrowRight } from "lucide-react"
 import { services, getServiceIcon } from "@/data/services"
 import { useLang } from "@/context/LangContext"
 
@@ -26,14 +26,17 @@ export function ServicesCarousel() {
     if (!el) return
     checkScroll()
     el.addEventListener("scroll", checkScroll, { passive: true })
-    return () => el.removeEventListener("scroll", checkScroll)
+    window.addEventListener("resize", checkScroll)
+    return () => {
+      el.removeEventListener("scroll", checkScroll)
+      window.removeEventListener("resize", checkScroll)
+    }
   }, [checkScroll])
 
   const scroll = (dir: "left" | "right") => {
     const el = scrollRef.current
     if (!el) return
-    const amount = el.clientWidth * 0.7
-    el.scrollBy({ left: dir === "left" ? -amount : amount, behavior: "smooth" })
+    el.scrollBy({ left: dir === "left" ? -el.clientWidth * 0.7 : el.clientWidth * 0.7, behavior: "smooth" })
   }
 
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -54,54 +57,64 @@ export function ServicesCarousel() {
 
   const handleMouseUp = () => setIsDragging(false)
 
+  const iconColors: Record<string, string> = {
+    Camera: "from-blue-500/20 to-blue-600/10 text-blue-400",
+    Shield: "from-emerald-500/20 to-emerald-600/10 text-emerald-400",
+    Zap: "from-amber-500/20 to-amber-600/10 text-amber-400",
+    Network: "from-purple-500/20 to-purple-600/10 text-purple-400",
+    Radio: "from-rose-500/20 to-rose-600/10 text-rose-400",
+  }
+
   return (
     <div className="relative group">
       {canScrollLeft && (
         <button
           onClick={() => scroll("left")}
-          className="absolute -left-3 top-1/2 -translate-y-1/2 z-10 hidden sm:flex h-10 w-10 items-center justify-center rounded-full bg-theme-bg border border-theme-border text-theme-secondary shadow-lg hover:text-theme-text transition-all opacity-0 group-hover:opacity-100"
+          className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 hidden sm:flex h-12 w-12 items-center justify-center rounded-2xl glass text-slate-400 hover:text-white transition-all opacity-0 group-hover:opacity-100"
           aria-label="Anterior"
         >
-          <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+          <ChevronLeft className="h-5 w-5" />
         </button>
       )}
       {canScrollRight && (
         <button
           onClick={() => scroll("right")}
-          className="absolute -right-3 top-1/2 -translate-y-1/2 z-10 hidden sm:flex h-10 w-10 items-center justify-center rounded-full bg-theme-bg border border-theme-border text-theme-secondary shadow-lg hover:text-theme-text transition-all opacity-0 group-hover:opacity-100"
+          className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 hidden sm:flex h-12 w-12 items-center justify-center rounded-2xl glass text-slate-400 hover:text-white transition-all opacity-0 group-hover:opacity-100"
           aria-label="Siguiente"
         >
-          <ChevronRight className="h-5 w-5" aria-hidden="true" />
+          <ChevronRight className="h-5 w-5" />
         </button>
       )}
 
       <div
         ref={scrollRef}
-        className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4 -mx-4 px-4 scrollbar-hide"
+        className="flex gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4 -mx-4 px-4"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
       >
-        {services.map((service) => {
+        {services.map((service, idx) => {
           const Icon = getServiceIcon(service.icon)
+          const colorClasses = iconColors[service.icon] || "from-amber-500/20 to-amber-600/10 text-amber-400"
+
           return (
             <article
               key={service.id}
-              id={`carousel-${service.id}`}
-              className="snap-start shrink-0 w-[85vw] sm:w-[380px] rounded-2xl border border-theme-border bg-theme-bg p-6 transition-all hover:border-theme-accent/50 hover:shadow-lg hover:shadow-theme-accent/5 select-none"
+              className="snap-start shrink-0 w-[85vw] sm:w-[380px] rounded-2xl border border-white/5 bg-white/[0.03] p-6 card-hover hover:bg-white/[0.06] hover:border-amber-500/20 select-none flex flex-col"
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-theme-accent/10 text-theme-accent">
-                <Icon className="h-6 w-6" aria-hidden="true" />
+              <div className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${colorClasses}`}>
+                <Icon className="h-7 w-7" />
               </div>
-              <h3 className="mt-4 text-lg font-semibold text-theme-text">{service.title}</h3>
-              <p className="mt-2 text-sm text-theme-secondary leading-relaxed">{service.shortDesc}</p>
 
-              <ul className="mt-4 space-y-2" role="list">
+              <h3 className="mt-5 text-lg font-semibold text-white">{service.title}</h3>
+              <p className="mt-2 text-sm text-slate-400 leading-relaxed flex-1">{service.shortDesc}</p>
+
+              <ul className="mt-5 space-y-2.5" role="list">
                 {service.features.slice(0, 3).map((f, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-theme-secondary">
-                    <svg className="mt-0.5 h-4 w-4 shrink-0 text-theme-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <li key={i} className="flex items-start gap-2.5 text-sm text-slate-400">
+                    <svg className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                     {f}
@@ -109,25 +122,25 @@ export function ServicesCarousel() {
                 ))}
               </ul>
 
-              <div className="mt-4 flex items-center gap-2">
+              <div className="mt-5 flex items-center gap-2">
                 {service.forHome && (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-theme-surface-2 px-2.5 py-0.5 text-xs font-medium text-theme-secondary">
-                    <Home className="h-3 w-3" aria-hidden="true" /> {t("services.for_home")}
+                  <span className="inline-flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1 text-xs font-medium text-slate-400">
+                    <Home className="h-3 w-3" /> Hogar
                   </span>
                 )}
                 {service.forBusiness && (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-theme-surface-2 px-2.5 py-0.5 text-xs font-medium text-theme-secondary">
-                    <Building2 className="h-3 w-3" aria-hidden="true" /> {t("services.for_business")}
+                  <span className="inline-flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1 text-xs font-medium text-slate-400">
+                    <Building2 className="h-3 w-3" /> Empresa
                   </span>
                 )}
               </div>
 
               <Link
-                href={`/servicios#${service.id}`}
-                className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-theme-accent hover:text-theme-accent-hover transition-colors"
+                href={`/servicios/${service.id}`}
+                className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-amber-400 hover:text-amber-300 transition-colors group/link"
               >
-                {t("services.cta")}
-                <ChevronRight className="h-4 w-4" aria-hidden="true" />
+                Ver servicio
+                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-0.5" />
               </Link>
             </article>
           )

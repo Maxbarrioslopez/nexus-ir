@@ -56,39 +56,50 @@ Contáctanos para una cotización personalizada en Rancagua y todo Chile.`,
     readingTime: "5 min",
   },
   {
-    slug: "cerca-electrica-inteligente",
-    title: "Cerca eléctrica inteligente: programación y ventajas",
+    slug: "cerco-perimetral-inteligente",
+    title: "Cerco perimetral inteligente: fibra óptica vs eléctrico",
     excerpt:
-      "Descubre cómo una cerca eléctrica con programación inteligente puede proteger tu propiedad con alertas en tiempo real y control desde tu celular.",
-    content: `## ¿Qué es una cerca eléctrica inteligente?
+      "Comparativa completa entre cerco perimetral por fibra óptica con IA y cerca eléctrica tradicional. ¿Cuál elegir para tu propiedad?",
+    content: `## ¿Cerco perimetral por fibra óptica o cerca eléctrica?
 
-Es un sistema de seguridad perimetral que combina la disuasión física de una cerca eléctrica tradicional con tecnología de programación inteligente, sensores de corte y notificaciones en tiempo real.
+La seguridad perimetral ha evolucionado. Ya no se trata solo de disuadir al intruso, sino de detectarlo antes de que traspase el límite. Te presentamos las dos grandes alternativas:
 
-## Ventajas principales
+## Fibra óptica con IA (NETXUS LEOPARD)
 
-### Programación desde el celular
-Configura horarios de activación, sensibilidad y alertas directamente desde tu smartphone.
+La tecnología LEOPARD de A2Q (España) utiliza análisis espectral FFT en tiempo real e inteligencia artificial adaptativa para detectar intrusiones.
 
-### Sensores de corte y sabotaje
-Si alguien corta o manipula el cable, recibirás una alerta inmediata.
+### Ventajas
+- **Detección invisible**: el cable sensor es pasivo y no alerta al intruso
+- **Cero falsas alarmas**: la IA distingue entre personas, vehículos, animales y ramas
+- **Inmune a interferencias**: no le afectan EMI/RFI, rayos ni tormentas eléctricas
+- **Tres configuraciones**: NETXUS VALLA (cercos), NETXUS SUELO (enterrado), NETXUS WALL (paredes)
+- **Auto-diagnóstico**: el sistema se chequea solo y reporta su estado
 
-### Integración con otros sistemas
-Conecta tu cerca eléctrica con cámaras, alarmas y sistemas de automatización.
+## Cerca eléctrica certificada SEC
 
-### Respaldo de batería
-El sistema sigue funcionando incluso durante cortes de energía.
+Para quienes buscan una solución tradicional con respaldo normativo y excelente relación costo-beneficio.
 
-## Ideal para
+### Ventajas
+- **Certificación SEC**: cumple con la normativa chilena
+- **Programación inteligente**: control desde app Colmena Digital
+- **Sensores de corte**: alertas al instante si alguien manipula el cable
+- **Respaldo de batería**: funciona sin electricidad
+- **Costo accesible**: desde $350.000 instalado
 
-- Condominios y comunidades
-- Bodegas y terrenos industriales
-- Propiedades rurales
-- Hogares con perímetros grandes
+## ¿Cuál elegir?
 
-En Nexus IRL instalamos y programamos tu cerca eléctrica en Rancagua y todo Chile, con certificación profesional y garantía real.`,
+| Característica | Fibra Óptica (NETXUS) | Cerca Eléctrica |
+|---|---|---|
+| Detección | Invisible al intruso | Disuasiva visible |
+| Falsas alarmas | Mínimas (IA adaptativa) | Moderadas (ramas, animales) |
+| Costo | Desde $2.500.000 | Desde $350.000 |
+| Ideal para | Perímetros críticos, industrias | Hogares, condominios |
+| Mantención | Mínimo (pasivo) | Periódico (cableado) |
+
+En NETXUS te asesoramos para elegir la solución perimetral que mejor se adapte a tu propiedad y presupuesto.`,
     date: "2025-05-22",
-    author: "Nexus IRL",
-    tags: ["cerca eléctrica", "perímetro", "seguridad", "inteligente"],
+    author: "NETXUS Chile",
+    tags: ["cerco perimetral", "fibra óptica", "cerca eléctrica", "seguridad perímetro", "NETXUS"],
     readingTime: "4 min",
   },
   {

@@ -20,8 +20,8 @@ export const testimonials: Testimonial[] = [
     id: "test-2",
     name: "María José Fernández",
     rating: 5,
-    message: "Contraté la cerca eléctrica con programación y el sistema de alarmas. Todo funcionando a la perfección. Me explicaron cada detalle sin letra chica.",
-    service: "Cerca Eléctrica + Alarmas",
+    message: "Contraté el cerco perimetral con programación y el sistema de alarmas. Todo funcionando a la perfección. Me explicaron cada detalle sin letra chica.",
+    service: "Cerco Perimetral + Alarmas",
     date: "2025-11-20",
   },
   {

@@ -134,7 +134,7 @@ export const pricingTiers: PricingTier[] = [
   },
   {
     id: "ce-basica",
-    serviceId: "cerca-electrica",
+    serviceId: "cerco-perimetral",
     name: "Cerca Eléctrica Residencial",
     description: "Protección perimetral para casas y condominios con certificación SEC.",
     priceMin: 350000,
@@ -152,7 +152,7 @@ export const pricingTiers: PricingTier[] = [
   },
   {
     id: "ce-profesional",
-    serviceId: "cerca-electrica",
+    serviceId: "cerco-perimetral",
     name: "Cerca Eléctrica Inteligente",
     description: "Sistema con programación app, sensores de corte y alertas en tiempo real.",
     priceMin: 800000,
@@ -173,7 +173,7 @@ export const pricingTiers: PricingTier[] = [
   },
   {
     id: "ce-industrial",
-    serviceId: "cerca-electrica",
+    serviceId: "cerco-perimetral",
     name: "Cerca Eléctrica Industrial",
     description: "Protección para grandes perímetros, bodegas e industrias.",
     priceMin: 1500000,
