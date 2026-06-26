@@ -64,7 +64,7 @@ export function GalleryGrid() {
               onClick={() => setActiveCategory(cat.id)}
               role="tab"
               aria-selected={activeCategory === cat.id}
-              className={`rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+              className={`rounded-xl px-4 py-2 text-sm font-medium transition-[background-color,color,box-shadow] ${
                 activeCategory === cat.id
                   ? "bg-amber-500 text-slate-900 shadow-lg"
                   : "glass text-slate-400 hover:text-white"
@@ -90,7 +90,7 @@ export function GalleryGrid() {
                   <div className="h-24 w-32 text-white/20" dangerouslySetInnerHTML={{ __html: categoryArt(item.category) }} />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-3 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-3 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-[opacity,transform] duration-300">
                   <h3 className="text-sm font-semibold text-white">{item.title}</h3>
                   <p className="mt-1 text-xs text-slate-300 line-clamp-1">{item.description}</p>
                 </div>
@@ -104,17 +104,19 @@ export function GalleryGrid() {
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
           onClick={closeLightbox}
+          onKeyDown={(e) => e.key === "Escape" && closeLightbox()}
+          tabIndex={-1}
           role="dialog"
           aria-modal="true"
           aria-label={filtered[lightboxIndex].title}
         >
-          <button onClick={closeLightbox} className="absolute right-6 top-6 rounded-2xl glass p-3 text-white hover:bg-white/10 transition-all z-10" aria-label="Cerrar">
+          <button autoFocus onClick={closeLightbox} className="absolute right-6 top-6 rounded-2xl glass p-3 text-white hover:bg-white/10 transition-colors z-10" aria-label="Cerrar">
             <X className="h-5 w-5" />
           </button>
-          <button onClick={(e) => { e.stopPropagation(); goPrev() }} className="absolute left-6 top-1/2 -translate-y-1/2 rounded-2xl glass p-3 text-white hover:bg-white/10 transition-all z-10" aria-label="Anterior">
+          <button onClick={(e) => { e.stopPropagation(); goPrev() }} className="absolute left-6 top-1/2 -translate-y-1/2 rounded-2xl glass p-3 text-white hover:bg-white/10 transition-colors z-10" aria-label="Anterior">
             <ChevronLeft className="h-5 w-5" />
           </button>
-          <button onClick={(e) => { e.stopPropagation(); goNext() }} className="absolute right-6 top-1/2 -translate-y-1/2 rounded-2xl glass p-3 text-white hover:bg-white/10 transition-all z-10" aria-label="Siguiente">
+          <button onClick={(e) => { e.stopPropagation(); goNext() }} className="absolute right-6 top-1/2 -translate-y-1/2 rounded-2xl glass p-3 text-white hover:bg-white/10 transition-colors z-10" aria-label="Siguiente">
             <ChevronRight className="h-5 w-5" />
           </button>
           <div className="max-h-[85vh] max-w-4xl w-full" onClick={(e) => e.stopPropagation()}>

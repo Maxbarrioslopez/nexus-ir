@@ -58,7 +58,7 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-500/10">
-            <Shield className="h-8 w-8 text-amber-500" />
+            <Shield className="h-8 w-8 text-amber-500" aria-hidden="true" />
           </div>
           <h1 className="text-2xl font-bold text-white">Panel de Administración</h1>
           <p className="text-slate-400 mt-1">NETXUS Security Chile</p>
@@ -104,6 +104,7 @@ export default function AdminLoginPage() {
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200"
+                  aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -120,16 +121,16 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={loading || !input}
-            className="w-full rounded-xl bg-amber-500 px-6 py-3 text-sm font-semibold text-slate-900 transition-all hover:bg-amber-400 disabled:opacity-50 flex items-center justify-center gap-2"
+            className="w-full rounded-xl bg-amber-500 px-6 py-3 text-sm font-semibold text-slate-900 transition-[background-color,opacity] hover:bg-amber-400 disabled:opacity-50 flex items-center justify-center gap-2"
           >
             {loading ? (
-              <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none">
+              <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
               </svg>
             ) : (
               <>
-                <LogIn className="h-4 w-4" />
+                <LogIn className="h-4 w-4" aria-hidden="true" />
                 Ingresar
               </>
             )}
@@ -147,9 +148,9 @@ export default function AdminLoginPage() {
           <button
             type="button"
             onClick={handleDemoAccess}
-            className="w-full rounded-xl border border-amber-500/30 px-6 py-3 text-sm font-medium text-amber-400 transition-all hover:bg-amber-500/10 flex items-center justify-center gap-2"
+            className="w-full rounded-xl border border-amber-500/30 px-6 py-3 text-sm font-medium text-amber-400 transition-colors hover:bg-amber-500/10 flex items-center justify-center gap-2"
           >
-            <Bug className="h-4 w-4" />
+            <Bug className="h-4 w-4" aria-hidden="true" />
             Modo Demo (sin credenciales)
           </button>
         </form>

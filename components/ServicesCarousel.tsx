@@ -9,10 +9,34 @@ import { useLang } from "@/context/LangContext"
 export function ServicesCarousel() {
   const { t } = useLang()
   const scrollRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(true)
   const [isDragging, setIsDragging] = useState(false)
   const dragStart = useRef({ x: 0, scrollLeft: 0 })
+
+  useEffect(() => {
+    let ctx: gsap.Context | undefined
+    import("gsap").then((gsap) => {
+      import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+        gsap.default.registerPlugin(ScrollTrigger)
+        ctx = gsap.default.context(() => {
+          gsap.default.from(scrollRef.current!.children, {
+            y: 50,
+            opacity: 0,
+            duration: 0.7,
+            stagger: 0.1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 80%",
+            },
+          })
+        }, sectionRef.current!)
+      })
+    })
+    return () => { ctx?.revert() }
+  }, [])
 
   const checkScroll = useCallback(() => {
     const el = scrollRef.current
@@ -66,11 +90,11 @@ export function ServicesCarousel() {
   }
 
   return (
-    <div className="relative group">
+    <div ref={sectionRef} className="relative group">
       {canScrollLeft && (
         <button
           onClick={() => scroll("left")}
-          className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 hidden sm:flex h-12 w-12 items-center justify-center rounded-2xl glass text-slate-400 hover:text-white transition-all opacity-0 group-hover:opacity-100"
+          className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 hidden sm:flex h-12 w-12 items-center justify-center rounded-2xl glass text-slate-400 hover:text-white transition-[color,opacity] opacity-0 group-hover:opacity-100"
           aria-label="Anterior"
         >
           <ChevronLeft className="h-5 w-5" />
@@ -79,7 +103,7 @@ export function ServicesCarousel() {
       {canScrollRight && (
         <button
           onClick={() => scroll("right")}
-          className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 hidden sm:flex h-12 w-12 items-center justify-center rounded-2xl glass text-slate-400 hover:text-white transition-all opacity-0 group-hover:opacity-100"
+          className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 hidden sm:flex h-12 w-12 items-center justify-center rounded-2xl glass text-slate-400 hover:text-white transition-[color,opacity] opacity-0 group-hover:opacity-100"
           aria-label="Siguiente"
         >
           <ChevronRight className="h-5 w-5" />
@@ -105,7 +129,7 @@ export function ServicesCarousel() {
               className="snap-start shrink-0 w-[85vw] sm:w-[380px] rounded-2xl border border-white/5 bg-white/[0.03] p-6 card-hover hover:bg-white/[0.06] hover:border-amber-500/20 select-none flex flex-col"
             >
               <div className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${colorClasses}`}>
-                <Icon className="h-7 w-7" />
+                <Icon className="h-7 w-7" aria-hidden="true" />
               </div>
 
               <h3 className="mt-5 text-lg font-semibold text-white">{service.title}</h3>
@@ -114,7 +138,7 @@ export function ServicesCarousel() {
               <ul className="mt-5 space-y-2.5" role="list">
                 {service.features.slice(0, 3).map((f, i) => (
                   <li key={i} className="flex items-start gap-2.5 text-sm text-slate-400">
-                    <svg className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                    <svg className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                     {f}
@@ -125,12 +149,12 @@ export function ServicesCarousel() {
               <div className="mt-5 flex items-center gap-2">
                 {service.forHome && (
                   <span className="inline-flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1 text-xs font-medium text-slate-400">
-                    <Home className="h-3 w-3" /> Hogar
+                    <Home className="h-3 w-3" aria-hidden="true" /> Hogar
                   </span>
                 )}
                 {service.forBusiness && (
                   <span className="inline-flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1 text-xs font-medium text-slate-400">
-                    <Building2 className="h-3 w-3" /> Empresa
+                    <Building2 className="h-3 w-3" aria-hidden="true" /> Empresa
                   </span>
                 )}
               </div>
@@ -140,7 +164,7 @@ export function ServicesCarousel() {
                 className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-amber-400 hover:text-amber-300 transition-colors group/link"
               >
                 Ver servicio
-                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-0.5" />
+                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-0.5" aria-hidden="true" />
               </Link>
             </article>
           )

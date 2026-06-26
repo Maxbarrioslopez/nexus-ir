@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Linear</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  :root {
+    --bg: #08090a;
+    --panel: #0f1011;
+    --surface: #191a1b;
+    --surface-2: #28282c;
+    --fg: #f7f8f8;
+    --fg-2: #d0d6e0;
+    --muted: #8a8f98;
+    --meta: #62666d;
+    --accent: #5e6ad2;
+    --accent-hover: #828fff;
+    --accent-active: #4752c4;
+    --border: rgba(255,255,255,0.08);
+    --border-soft: rgba(255,255,255,0.05);
+    --success: #27a644;
+    --warn: #eab308;
+    --danger: #dc2626;
+    --font: "Inter Variable", "Inter", "SF Pro Display", -apple-system, system-ui, sans-serif;
+    --font-mono: "Berkeley Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --sidebar-w: 240px;
+    --header-h: 52px;
+  }
+
+  html { font-size: 16px; }
+  body {
+    font-family: var(--font);
+    font-feature-settings: "cv01", "ss03";
+    background: var(--bg);
+    color: var(--fg);
+    display: flex;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .sidebar {
+    width: var(--sidebar-w);
+    background: var(--panel);
+    border-right: 1px solid var(--border-soft);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 100;
+    transition: transform .2s var(--ease);
+  }
+
+  .sidebar-header {
+    height: var(--header-h);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 16px;
+    border-bottom: 1px solid var(--border-soft);
+    flex-shrink: 0;
+  }
+
+  .sidebar-logo {
+    width: 20px;
+    height: 20px;
+    background: var(--accent);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .sidebar-title {
+    font-size: 14px;
+    font-weight: 510;
+    color: var(--fg);
+    letter-spacing: -0.15px;
+  }
+
+  .sidebar-nav {
+    padding: 12px 8px;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .nav-section {
+    font-size: 11px;
+    font-weight: 510;
+    color: var(--meta);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 8px 6px;
+    margin-top: 4px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 8px;
+    border-radius: var(--radius-sm);
+    color: var(--fg-2);
+    font-size: 13.5px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all .15s var(--ease);
+    text-decoration: none;
+  }
+
+  .nav-item:hover { background: rgba(255,255,255,0.04); color: var(--fg); }
+  .nav-item.active { background: rgba(255,255,255,0.06); color: var(--fg); }
+  .nav-item.active::before {
+    content: "";
+    width: 2px;
+    height: 16px;
+    background: var(--accent);
+    border-radius: 1px;
+    position: absolute;
+    left: 0;
+  }
+
+  .nav-icon { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.6; }
+  .nav-item:hover .nav-icon, .nav-item.active .nav-icon { opacity: 1; }
+
+  .nav-badge {
+    margin-left: auto;
+    background: var(--accent);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 510;
+    padding: 0 6px;
+    border-radius: 9999px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+  }
+
+  .sidebar-footer {
+    padding: 8px;
+    border-top: 1px solid var(--border-soft);
+  }
+
+  .user-card {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+
+  .user-card:hover { background: rgba(255,255,255,0.04); }
+
+  .user-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 600;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .user-name { font-size: 13px; font-weight: 510; color: var(--fg); }
+  .user-role { font-size: 11px; color: var(--meta); }
+
+  .main { flex: 1; margin-left: var(--sidebar-w); min-width: 0; }
+
+  .header {
+    height: var(--header-h);
+    background: var(--panel);
+    border-bottom: 1px solid var(--border-soft);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .header-title { font-size: 14px; font-weight: 510; color: var(--fg); }
+
+  .header-search {
+    flex: 1;
+    max-width: 360px;
+    position: relative;
+  }
+
+  .header-search input {
+    width: 100%;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    padding: 5px 12px 5px 32px;
+    color: var(--fg);
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 400;
+    outline: none;
+    transition: border-color .15s;
+  }
+
+  .header-search input::placeholder { color: var(--meta); }
+  .header-search input:focus { border-color: var(--border); }
+
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    opacity: 0.4;
+  }
+
+  .header-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+
+  .icon-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03);
+    color: var(--fg-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all .15s;
+    font-size: 14px;
+  }
+
+  .icon-btn:hover { background: rgba(255,255,255,0.06); color: var(--fg); }
+
+  .content { padding: 24px; }
+
+  .page-title { font-size: 20px; font-weight: 590; letter-spacing: -0.24px; color: var(--fg); margin-bottom: 4px; }
+  .page-subtitle { font-size: 14px; color: var(--meta); margin-bottom: 24px; }
+
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+
+  .metric-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    transition: background .15s;
+  }
+
+  .metric-card:hover { background: rgba(255,255,255,0.04); }
+
+  .metric-label {
+    font-size: 12px;
+    font-weight: 510;
+    color: var(--meta);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 8px;
+  }
+
+  .metric-value {
+    font-size: 28px;
+    font-weight: 510;
+    color: var(--fg);
+    letter-spacing: -0.5px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .metric-change {
+    font-size: 12px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .metric-change.up { color: var(--success); }
+  .metric-change.down { color: var(--danger); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+
+  .card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .card-title { font-size: 13px; font-weight: 510; color: var(--fg); }
+  .card-action { font-size: 12px; color: var(--accent); cursor: pointer; font-weight: 510; }
+  .card-action:hover { color: var(--accent-hover); }
+
+  .card-body { padding: 16px; }
+
+  .bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 120px; padding: 8px 0; }
+
+  .bar {
+    flex: 1;
+    background: var(--accent);
+    border-radius: 3px 3px 0 0;
+    min-height: 4px;
+    transition: opacity .15s;
+    opacity: 0.6;
+  }
+
+  .bar:hover { opacity: 1; }
+  .bar.bar-success { background: var(--success); }
+
+  .chart-labels {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .chart-label {
+    flex: 1;
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--meta);
+    text-align: center;
+  }
+
+  .table-wrap { overflow-x: auto; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+  th {
+    text-align: left;
+    padding: 8px 16px;
+    font-weight: 510;
+    color: var(--meta);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    border-bottom: 1px solid var(--border-soft);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border-soft);
+    color: var(--fg-2);
+  }
+
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 510;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .status-dot.active { background: var(--success); }
+  .status-dot.pending { background: var(--warn); }
+  .status-dot.inactive { background: var(--danger); }
+
+  .activity-list { display: flex; flex-direction: column; gap: 0; }
+
+  .activity-item {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .activity-item:last-child { border-bottom: none; }
+
+  .activity-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+
+  .activity-content { flex: 1; min-width: 0; }
+  .activity-text { font-size: 13px; color: var(--fg-2); }
+  .activity-text strong { color: var(--fg); font-weight: 510; }
+  .activity-time { font-size: 11px; color: var(--meta); margin-top: 2px; }
+
+  .hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--fg);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 90;
+  }
+
+  @media (max-width: 1024px) {
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+    .sidebar {
+      transform: translateX(-100%);
+    }
+    .sidebar.open { transform: translateX(0); }
+    .overlay.open { display: block; }
+    .main { margin-left: 0; }
+    .content { padding: 16px; }
+    .header { padding: 0 12px; }
+    .header-search { display: none; }
+    .metrics { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .metric-value { font-size: 22px; }
+  }
+
+  @media (max-width: 480px) {
+    .metrics { grid-template-columns: 1fr; }
+  }
+
+  svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">N</div>
+    <span class="sidebar-title">NETXUS</span>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">Principal</div>
+    <a class="nav-item active" href="#">
+      <svg class="nav-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </a>
+    <a class="nav-item" href="#">
+      <svg class="nav-icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Clientes
+      <span class="nav-badge">12</span>
+    </a>
+    <a class="nav-item" href="#">
+      <svg class="nav-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+      Servicios
+    </a>
+    <a class="nav-item" href="#">
+      <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+      Facturación
+    </a>
+    <a class="nav-item" href="#">
+      <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+      Reportes
+    </a>
+
+    <div class="nav-section">Configuración</div>
+    <a class="nav-item" href="#">
+      <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Ajustes
+    </a>
+    <a class="nav-item" href="#">
+      <svg class="nav-icon" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+      Auditoría
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="user-card">
+      <div class="user-avatar">JT</div>
+      <div>
+        <div class="user-name">Jaime Tamblay</div>
+        <div class="user-role">Administrador</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div class="main">
+  <header class="header">
+    <button class="hamburger" onclick="toggleSidebar()">☰</button>
+    <div class="header-title">Dashboard</div>
+    <div class="header-search">
+      <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" placeholder="Buscar...">
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" title="Notificaciones">
+        <svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+      </button>
+      <button class="icon-btn" title="Ayuda">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="content">
+    <h1 class="page-title">Panel de Control</h1>
+    <p class="page-subtitle">Resumen operativo de NETXUS Security — VI Región</p>
+
+    <div class="metrics">
+      <div class="metric-card">
+        <div class="metric-label">Clientes Activos</div>
+        <div class="metric-value">247</div>
+        <div class="metric-change up">
+          <svg width="12" height="12" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+          +12.5% vs mes anterior
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Servicios Activos</div>
+        <div class="metric-value">189</div>
+        <div class="metric-change up">
+          <svg width="12" height="12" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+          +8.3% vs mes anterior
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Alertas Hoy</div>
+        <div class="metric-value">23</div>
+        <div class="metric-change down">
+          <svg width="12" height="12" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          -5.2% vs ayer
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Ingresos del Mes</div>
+        <div class="metric-value">$12.4M</div>
+        <div class="metric-change up">
+          <svg width="12" height="12" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+          +18.7% vs mes anterior
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Servicios por Mes</span>
+          <span class="card-action">Ver detalle</span>
+        </div>
+        <div class="card-body">
+          <div class="bar-chart">
+            <div class="bar" style="height: 40%"></div>
+            <div class="bar" style="height: 55%"></div>
+            <div class="bar" style="height: 35%"></div>
+            <div class="bar" style="height: 70%"></div>
+            <div class="bar bar-success" style="height: 85%"></div>
+            <div class="bar bar-success" style="height: 65%"></div>
+            <div class="bar" style="height: 45%"></div>
+            <div class="bar bar-success" style="height: 90%"></div>
+            <div class="bar" style="height: 75%"></div>
+            <div class="bar bar-success" style="height: 100%"></div>
+            <div class="bar" style="height: 60%"></div>
+            <div class="bar" style="height: 50%"></div>
+          </div>
+          <div class="chart-labels">
+            <span class="chart-label">Ene</span>
+            <span class="chart-label">Feb</span>
+            <span class="chart-label">Mar</span>
+            <span class="chart-label">Abr</span>
+            <span class="chart-label">May</span>
+            <span class="chart-label">Jun</span>
+            <span class="chart-label">Jul</span>
+            <span class="chart-label">Ago</span>
+            <span class="chart-label">Sep</span>
+            <span class="chart-label">Oct</span>
+            <span class="chart-label">Nov</span>
+            <span class="chart-label">Dic</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Actividad Reciente</span>
+        </div>
+        <div class="card-body" style="padding: 0 16px;">
+          <div class="activity-list">
+            <div class="activity-item">
+              <div class="activity-icon">🔒</div>
+              <div class="activity-content">
+                <div class="activity-text"><strong>Cerco perimetral</strong> instalado en Bodegas San Miguel</div>
+                <div class="activity-time">Hace 15 minutos</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">📹</div>
+              <div class="activity-content">
+                <div class="activity-text"><strong>Cámaras 4K</strong> activadas en Oficinas Rancagua</div>
+                <div class="activity-time">Hace 2 horas</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">⚠️</div>
+              <div class="activity-content">
+                <div class="activity-text">Alerta de <strong>intento de intrusión</strong> en Cliente Industrial</div>
+                <div class="activity-time">Hace 4 horas</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">📊</div>
+              <div class="activity-content">
+                <div class="activity-text">Reporte mensual de <strong>auditoría</strong> disponible</div>
+                <div class="activity-time">Hace 1 día</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">✅</div>
+              <div class="activity-content">
+                <div class="activity-text"><strong>Mantenimiento preventivo</strong> completado en Cerro Navia</div>
+                <div class="activity-time">Hace 1 día</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Últimos Clientes</span>
+        <span class="card-action">Ver todos</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Servicio</th>
+              <th>Ubicación</th>
+              <th>Estado</th>
+              <th>Valor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong style="color:var(--fg);font-weight:510;">Bodegas San Miguel</strong></td>
+              <td>Cerco Perimetral</td>
+              <td>Rancagua</td>
+              <td><span class="status"><span class="status-dot active"></span>Activo</span></td>
+              <td style="color:var(--fg);font-weight:510;">$2.450.000</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--fg);font-weight:510;">Of. Corp. Rancagua</strong></td>
+              <td>CCTV 4K + Alarma</td>
+              <td>Rancagua</td>
+              <td><span class="status"><span class="status-dot active"></span>Activo</span></td>
+              <td style="color:var(--fg);font-weight:510;">$1.890.000</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--fg);font-weight:510;">Industrial Machalí</strong></td>
+              <td>Control de Acceso</td>
+              <td>Machalí</td>
+              <td><span class="status"><span class="status-dot pending"></span>Pendiente</span></td>
+              <td style="color:var(--fg);font-weight:510;">$3.200.000</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--fg);font-weight:510;">Residencial San Fernando</strong></td>
+              <td>Alarma Hogar</td>
+              <td>San Fernando</td>
+              <td><span class="status"><span class="status-dot active"></span>Activo</span></td>
+              <td style="color:var(--fg);font-weight:510;">$680.000</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--fg);font-weight:510;">Minera El Teniente</strong></td>
+              <td>Cableado Estructurado</td>
+              <td>Machalí</td>
+              <td><span class="status"><span class="status-dot inactive"></span>En pausa</span></td>
+              <td style="color:var(--fg);font-weight:510;">$5.600.000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+}
+</script>
+</body>
+</html>

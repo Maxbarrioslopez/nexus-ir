@@ -76,7 +76,7 @@ export default function AdminPage() {
       <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
           <div className="flex items-center gap-3">
-            <Shield className="h-6 w-6 text-amber-500" />
+            <Shield className="h-6 w-6 text-amber-500" aria-hidden="true" />
             <span className="text-lg font-bold text-white">Admin NETXUS</span>
             {demoMode && (
               <span className="rounded-full bg-amber-500/20 px-2.5 py-0.5 text-xs font-medium text-amber-400">
@@ -84,11 +84,19 @@ export default function AdminPage() {
               </span>
             )}
           </div>
+          <a
+            href="/dashboard-linear.html"
+            target="_blank"
+            className="flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-sm text-slate-300 transition-colors hover:bg-white/5"
+          >
+            <LayoutDashboard className="h-4 w-4" aria-hidden="true" />
+            Dashboard Linear
+          </a>
           <button
             onClick={handleLogout}
             className="flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-sm text-slate-300 transition-colors hover:bg-white/5"
           >
-            <LogOut className="h-4 w-4" />
+            <LogOut className="h-4 w-4" aria-hidden="true" />
             Salir
           </button>
         </div>
@@ -100,13 +108,13 @@ export default function AdminPage() {
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
-              className={`flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-all whitespace-nowrap ${
+              className={`flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-colors whitespace-nowrap ${
                 tab === t.id
                   ? "bg-amber-500 text-slate-900"
                   : "text-slate-400 hover:text-white hover:bg-white/5"
               }`}
             >
-              <t.icon className="h-4 w-4" />
+              <t.icon className="h-4 w-4" aria-hidden="true" />
               {t.label}
               {t.badge ? (
                 <span className={`rounded-full px-2 py-0.5 text-xs ${
@@ -171,7 +179,7 @@ export default function AdminPage() {
           <div className="space-y-4">
             <div className="flex items-center gap-4">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
                 <input
                   type="text"
                   value={searchQuery}
@@ -184,14 +192,14 @@ export default function AdminPage() {
                 onClick={() => setShowAddContact(!showAddContact)}
                 className="flex items-center gap-2 rounded-xl bg-amber-500 px-4 py-2.5 text-sm font-semibold text-slate-900 hover:bg-amber-400"
               >
-                <Plus className="h-4 w-4" />
+                <Plus className="h-4 w-4" aria-hidden="true" />
                 Agregar
               </button>
             </div>
 
             {filteredContacts.length === 0 ? (
               <div className="rounded-2xl border border-white/10 bg-white/5 p-12 text-center">
-                <Users className="mx-auto h-12 w-12 text-slate-600 mb-4" />
+                <Users className="mx-auto h-12 w-12 text-slate-600 mb-4" aria-hidden="true" />
                 <p className="text-slate-400">No hay contactos {searchQuery ? "que coincidan" : "aún"}</p>
               </div>
             ) : (
@@ -211,9 +219,9 @@ export default function AdminPage() {
                           </span>
                         </div>
                         <div className="flex items-center gap-4 mt-1.5 text-xs text-slate-400">
-                          <span className="flex items-center gap-1"><Mail className="h-3 w-3" />{c.email}</span>
-                          <span className="flex items-center gap-1"><Phone className="h-3 w-3" />{c.phone}</span>
-                          <span className="flex items-center gap-1"><Calendar className="h-3 w-3" />{new Date(c.created_at).toLocaleDateString("es-CL")}</span>
+                          <span className="flex items-center gap-1"><Mail className="h-3 w-3" aria-hidden="true" />{c.email}</span>
+                          <span className="flex items-center gap-1"><Phone className="h-3 w-3" aria-hidden="true" />{c.phone}</span>
+                          <span className="flex items-center gap-1"><Calendar className="h-3 w-3" aria-hidden="true" />{new Date(c.created_at).toLocaleDateString("es-CL")}</span>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
@@ -221,6 +229,7 @@ export default function AdminPage() {
                           onClick={() => { updateContactStatus(c.id, "read"); loadData() }}
                           className="rounded-lg border border-white/10 p-2 text-slate-400 hover:text-white transition-colors"
                           title="Marcar como leído"
+                          aria-label="Marcar como leído"
                         >
                           <Eye className="h-4 w-4" />
                         </button>
@@ -228,6 +237,7 @@ export default function AdminPage() {
                           onClick={() => { deleteContact(c.id); loadData() }}
                           className="rounded-lg border border-white/10 p-2 text-red-400 hover:text-red-300 transition-colors"
                           title="Eliminar"
+                          aria-label="Eliminar contacto"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
@@ -250,7 +260,7 @@ export default function AdminPage() {
           <div className="space-y-3">
             {testimonials.length === 0 ? (
               <div className="rounded-2xl border border-white/10 bg-white/5 p-12 text-center">
-                <Star className="mx-auto h-12 w-12 text-slate-600 mb-4" />
+                <Star className="mx-auto h-12 w-12 text-slate-600 mb-4" aria-hidden="true" />
                 <p className="text-slate-400">No hay testimonios</p>
               </div>
             ) : (
@@ -259,7 +269,7 @@ export default function AdminPage() {
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <div className="flex items-center gap-2">
-                        <User className="h-5 w-5 text-amber-400" />
+                        <User className="h-5 w-5 text-amber-400" aria-hidden="true" />
                         <h4 className="font-medium text-white">{t.name}</h4>
                         <div className="flex">
                           {Array.from({ length: 5 }).map((_, i) => (
@@ -278,6 +288,7 @@ export default function AdminPage() {
                             : "border-white/10 text-slate-500 hover:text-white"
                         }`}
                         title={t.visible ? "Ocultar" : "Mostrar"}
+                        aria-label={t.visible ? "Ocultar" : "Mostrar"}
                       >
                         {t.visible ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
                       </button>
@@ -285,6 +296,7 @@ export default function AdminPage() {
                         onClick={() => { deleteTestimonial(t.id); loadData() }}
                         className="rounded-lg border border-white/10 p-2 text-red-400 hover:text-red-300 transition-colors"
                         title="Eliminar"
+                        aria-label="Eliminar testimonio"
                       >
                         <Trash2 className="h-4 w-4" />
                       </button>
@@ -302,14 +314,14 @@ export default function AdminPage() {
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {gallery.length === 0 ? (
                 <div className="col-span-full rounded-2xl border border-white/10 bg-white/5 p-12 text-center">
-                  <Image className="mx-auto h-12 w-12 text-slate-600 mb-4" />
-                  <p className="text-slate-400">No hay imágenes en la galería</p>
+                <Image className="mx-auto h-12 w-12 text-slate-600 mb-4" aria-hidden="true" />
+                <p className="text-slate-400">No hay imágenes en la galería</p>
                 </div>
               ) : (
                 gallery.map((g) => (
                   <div key={g.id} className="group relative rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
                     <div className="aspect-video bg-gradient-to-br from-slate-800 to-slate-700 flex items-center justify-center">
-                      <Image className="h-8 w-8 text-slate-600" />
+                      <Image className="h-8 w-8 text-slate-600" aria-hidden="true" />
                     </div>
                     <div className="p-4">
                       <h4 className="text-sm font-medium text-white truncate">{g.title}</h4>
@@ -318,6 +330,7 @@ export default function AdminPage() {
                     <button
                       onClick={() => { deleteGalleryItem(g.id); loadData() }}
                       className="absolute right-2 top-2 rounded-lg bg-red-500/80 p-1.5 opacity-0 transition-opacity group-hover:opacity-100"
+                      aria-label="Eliminar imagen"
                     >
                       <Trash2 className="h-4 w-4 text-white" />
                     </button>
@@ -394,7 +407,7 @@ function StatCard({ icon: Icon, label, value, color }: {
   return (
     <div className={`rounded-2xl border bg-gradient-to-br p-5 ${colors[color] || colors.blue}`}>
       <div className="flex items-center gap-3">
-        <Icon className="h-5 w-5" />
+        <Icon className="h-5 w-5" aria-hidden="true" />
         <span className="text-sm font-medium">{label}</span>
       </div>
       <p className="text-3xl font-bold text-white mt-2">{value}</p>

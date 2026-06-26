@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useRef } from "react"
 import Link from "next/link"
 import { Shield, Phone, Mail, MapPin, Clock, ArrowUpRight } from "lucide-react"
 import { useLang } from "@/context/LangContext"
@@ -9,15 +10,39 @@ import { WHATSAPP_NUMBER, EMAIL } from "@/lib/constants"
 export function Footer() {
   const { t } = useLang()
   const currentYear = new Date().getFullYear()
+  const footerRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    let ctx: gsap.Context | undefined
+    import("gsap").then((gsap) => {
+      import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+        gsap.default.registerPlugin(ScrollTrigger)
+        ctx = gsap.default.context(() => {
+          gsap.default.from(footerRef.current!.querySelectorAll(".footer-col"), {
+            y: 30,
+            opacity: 0,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: footerRef.current,
+              start: "top 90%",
+            },
+          })
+        }, footerRef.current!)
+      })
+    })
+    return () => { ctx?.revert() }
+  }, [])
 
   return (
-    <footer className="bg-slate-950 border-t border-white/5" role="contentinfo">
+    <footer ref={footerRef} className="bg-slate-950 border-t border-white/5" role="contentinfo">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="lg:col-span-1">
+          <div className="footer-col lg:col-span-1">
             <Link href="/" className="flex items-center gap-2.5 group mb-5">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/10 group-hover:bg-amber-500/20 transition-colors">
-                <Shield className="h-5 w-5 text-amber-500" />
+                <Shield className="h-5 w-5 text-amber-500" aria-hidden="true" />
               </div>
               <span className="text-lg font-bold text-white tracking-tight">NETXUS</span>
             </Link>
@@ -29,7 +54,7 @@ export function Footer() {
             </p>
           </div>
 
-          <div>
+          <div className="footer-col">
             <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-widest mb-5">
               {t("footer.quick_links")}
             </h3>
@@ -39,6 +64,7 @@ export function Footer() {
                 { href: "/servicios", label: "nav.servicios" },
                 { href: "/precios", label: "Precios" },
                 { href: "/galeria", label: "nav.galeria" },
+                { href: "/faq", label: "FAQ" },
                 { href: "/blog", label: "nav.blog" },
                 { href: "/contacto", label: "nav.contacto" },
               ].map((link) => (
@@ -48,14 +74,14 @@ export function Footer() {
                     className="text-sm text-slate-400 hover:text-amber-400 transition-colors inline-flex items-center gap-1"
                   >
                     {link.label}
-                    <ArrowUpRight className="h-3 w-3 opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all" />
+                    <ArrowUpRight className="h-3 w-3 opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-[opacity,transform]" />
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div>
+          <div className="footer-col">
             <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-widest mb-5">
               {t("footer.services_title")}
             </h3>
@@ -73,13 +99,13 @@ export function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="footer-col">
             <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-widest mb-5">
               {t("footer.contact_title")}
             </h3>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" aria-hidden="true" />
                 <span className="text-sm text-slate-400">
                   Rancagua, VI Región<br />Chile
                 </span>
@@ -89,7 +115,7 @@ export function Footer() {
                   href={`tel:+56${WHATSAPP_NUMBER}`}
                   className="flex items-center gap-3 text-sm text-slate-400 hover:text-amber-400 transition-colors"
                 >
-                  <Phone className="h-4 w-4 shrink-0 text-amber-500" />
+                  <Phone className="h-4 w-4 shrink-0 text-amber-500" aria-hidden="true" />
                   +56 {WHATSAPP_NUMBER.slice(0,1)} {WHATSAPP_NUMBER.slice(1,4)} {WHATSAPP_NUMBER.slice(4)}
                 </a>
               </li>
@@ -98,12 +124,12 @@ export function Footer() {
                   href={`mailto:${EMAIL}`}
                   className="flex items-center gap-3 text-sm text-slate-400 hover:text-amber-400 transition-colors"
                 >
-                  <Mail className="h-4 w-4 shrink-0 text-amber-500" />
+                  <Mail className="h-4 w-4 shrink-0 text-amber-500" aria-hidden="true" />
                   {EMAIL}
                 </a>
               </li>
               <li className="flex items-start gap-3">
-                <Clock className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
+                <Clock className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" aria-hidden="true" />
                 <span className="text-sm text-slate-400">
                   Lun–Sáb: 09:00–20:00
                 </span>

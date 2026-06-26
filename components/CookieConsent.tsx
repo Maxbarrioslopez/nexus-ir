@@ -44,7 +44,7 @@ export function CookieConsent() {
           </Link>
           <button
             onClick={accept}
-            className="rounded-xl bg-amber-500 px-5 py-2 text-sm font-semibold text-slate-900 transition-all hover:bg-amber-400"
+            className="rounded-xl bg-amber-500 px-5 py-2 text-sm font-semibold text-slate-900 transition-colors hover:bg-amber-400"
           >
             Aceptar
           </button>

@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useRef } from "react"
 import Link from "next/link"
 import { Shield, Award, BadgeCheck, Coins, ArrowRight } from "lucide-react"
 import { useLang } from "@/context/LangContext"
@@ -13,36 +14,84 @@ const badges = [
 
 export function Hero() {
   const { t } = useLang()
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    let ctx: gsap.Context | undefined
+    import("gsap").then((gsap) => {
+      import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+        gsap.default.registerPlugin(ScrollTrigger)
+        const sel = gsap.default.utils.selector(sectionRef.current!)
+        ctx = gsap.default.context(() => {
+          gsap.default.from(sel(".hero-content > *"), {
+            y: 40,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 80%",
+              toggleActions: "play none none reverse",
+            },
+          })
+          gsap.default.from(sel(".badge-item"), {
+            y: 30,
+            opacity: 0,
+            duration: 0.6,
+            stagger: 0.08,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: sel(".badges-grid"),
+              start: "top 90%",
+            },
+          })
+          const orbs = sel(".glow-orb")
+          orbs.forEach((orb: Element, i: number) => {
+            gsap.default.to(orb, {
+              y: i === 0 ? -30 : 30,
+              x: i === 0 ? 20 : -20,
+              duration: 4 + i * 2,
+              repeat: -1,
+              yoyo: true,
+              ease: "sine.inOut",
+            })
+          })
+        }, sectionRef.current!)
+      })
+    })
+    return () => { ctx?.revert() }
+  }, [])
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800">
+    <section ref={sectionRef} className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800">
       <div className="absolute inset-0 bg-grid" aria-hidden="true" />
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent" aria-hidden="true" />
 
-      <div className="absolute top-1/4 -left-32 h-96 w-96 rounded-full bg-amber-500/5 blur-3xl" aria-hidden="true" />
-      <div className="absolute bottom-1/4 -right-32 h-80 w-80 rounded-full bg-amber-500/3 blur-3xl" aria-hidden="true" />
+      <div className="glow-orb absolute top-1/4 -left-32 h-96 w-96 rounded-full bg-amber-500/5 blur-3xl" aria-hidden="true" />
+      <div className="glow-orb absolute bottom-1/4 -right-32 h-80 w-80 rounded-full bg-amber-500/3 blur-3xl" aria-hidden="true" />
 
       <div className="relative mx-auto max-w-7xl px-4 pt-32 pb-20 sm:px-6 sm:pt-40 sm:pb-28 lg:px-8 lg:pt-48 lg:pb-36">
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-4 py-1.5 text-sm text-amber-400 mb-8 animate-fade-in">
+        <div className="hero-content max-w-3xl">
+          <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-4 py-1.5 text-sm text-amber-400 mb-8">
             <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse" aria-hidden="true" />
             Empresa certificada — Rancagua, Chile
           </div>
 
-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl text-balance animate-fade-in-up">
+          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl text-balance">
             {t("hero.title")}
           </h1>
-          <p className="mt-6 text-lg leading-relaxed text-slate-300 sm:text-xl max-w-2xl animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+          <p className="mt-6 text-lg leading-relaxed text-slate-300 sm:text-xl max-w-2xl">
             {t("hero.subtitle")}
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-4 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+          <div className="mt-8 flex flex-wrap gap-4">
             <Link
               href="/contacto"
               className="btn-primary inline-flex items-center gap-2"
             >
               {t("hero.cta_primary")}
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
             <Link
               href="/servicios"
@@ -52,13 +101,13 @@ export function Hero() {
             </Link>
           </div>
 
-          <div className="mt-16 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4 animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
+          <div className="badges-grid mt-16 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
             {badges.map((badge) => {
               const Icon = badge.icon
               return (
                 <div
                   key={badge.key}
-                  className="flex items-center gap-2.5 rounded-2xl border border-white/5 bg-white/[0.03] px-4 py-3.5 backdrop-blur-sm hover:bg-white/[0.06] hover:border-white/10 transition-all"
+                  className="badge-item flex items-center gap-2.5 rounded-2xl border border-white/5 bg-white/[0.03] px-4 py-3.5 backdrop-blur-sm hover:bg-white/[0.06] hover:border-white/10 transition-colors"
                 >
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500/10 shrink-0">
                     <Icon className="h-4 w-4 text-amber-400" aria-hidden="true" />

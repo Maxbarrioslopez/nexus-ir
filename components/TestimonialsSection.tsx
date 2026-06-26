@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Star, MessageSquare, Quote } from "lucide-react"
 import { testimonials as staticTestimonials, type Testimonial } from "@/data/testimonials"
 import { useLang } from "@/context/LangContext"
@@ -31,9 +31,33 @@ function Stars({ rating, interactive, onChange }: {
 
 export function TestimonialsSection() {
   const { t } = useLang()
+  const sectionRef = useRef<HTMLElement>(null)
   const [showForm, setShowForm] = useState(false)
   const [formData, setFormData] = useState({ name: "", rating: 5, message: "" })
   const [formStatus, setFormStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
+
+  useEffect(() => {
+    let ctx: gsap.Context | undefined
+    import("gsap").then((gsap) => {
+      import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+        gsap.default.registerPlugin(ScrollTrigger)
+        ctx = gsap.default.context(() => {
+          gsap.default.from(sectionRef.current!.querySelectorAll("article"), {
+            y: 40,
+            opacity: 0,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 80%",
+            },
+          })
+        }, sectionRef.current!)
+      })
+    })
+    return () => { ctx?.revert() }
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -49,7 +73,7 @@ export function TestimonialsSection() {
   }
 
   return (
-    <section className="bg-slate-950 section-padding" id="testimonios">
+    <section ref={sectionRef} className="bg-slate-950 section-padding" id="testimonios">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
@@ -67,7 +91,7 @@ export function TestimonialsSection() {
               className="group relative rounded-2xl border border-white/5 bg-white/[0.02] p-6 card-hover hover:bg-white/[0.04] hover:border-amber-500/10"
               style={{ animationDelay: `${idx * 0.05}s` }}
             >
-              <Quote className="absolute top-4 right-4 h-8 w-8 text-amber-500/5" />
+              <Quote className="absolute top-4 right-4 h-8 w-8 text-amber-500/5" aria-hidden="true" />
               <Stars rating={item.rating} />
               <p className="mt-3 text-sm text-slate-300 leading-relaxed">
                 &ldquo;{item.message}&rdquo;
@@ -93,7 +117,7 @@ export function TestimonialsSection() {
               onClick={() => setShowForm(true)}
               className="btn-primary inline-flex items-center gap-2"
             >
-              <MessageSquare className="h-4 w-4" />
+              <MessageSquare className="h-4 w-4" aria-hidden="true" />
               {t("testimonials.submit_title")}
             </button>
           ) : (
@@ -134,10 +158,10 @@ export function TestimonialsSection() {
                   <button
                     type="submit"
                     disabled={formStatus === "loading"}
-                    className="w-full rounded-xl bg-amber-500 px-6 py-3 text-sm font-semibold text-slate-900 transition-all hover:bg-amber-400 disabled:opacity-50"
+                    className="w-full rounded-xl bg-amber-500 px-6 py-3 text-sm font-semibold text-slate-900 transition-[background-color,opacity] hover:bg-amber-400 disabled:opacity-50"
                   >
                     {formStatus === "loading" ? (
-                      <svg className="h-5 w-5 animate-spin mx-auto" viewBox="0 0 24 24" fill="none">
+                      <svg className="h-5 w-5 animate-spin mx-auto" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                       </svg>

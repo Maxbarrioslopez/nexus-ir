@@ -33,7 +33,7 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,backdrop-filter] duration-300 ${
         scrolled || !isHome
           ? "glass-strong"
           : "bg-transparent"
@@ -45,7 +45,7 @@ export function Header() {
           className="flex items-center gap-2.5 group"
         >
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-500/10 group-hover:bg-amber-500/20 transition-colors">
-            <Shield className="h-5 w-5 text-amber-500" />
+            <Shield className="h-5 w-5 text-amber-500" aria-hidden="true" />
           </div>
           <span className="text-lg font-bold text-white tracking-tight">
             NETXUS
@@ -59,8 +59,8 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`relative rounded-xl px-4 py-2 text-sm font-medium transition-all ${
-                  isActive
+className={`relative rounded-xl px-4 py-2 text-sm font-medium transition-colors ${
+                   isActive
                     ? "text-amber-400 bg-amber-500/10"
                     : "text-slate-300 hover:text-white hover:bg-white/5"
                 }`}
@@ -74,7 +74,7 @@ export function Header() {
           })}
           <Link
             href="/admin"
-            className="ml-3 rounded-xl border border-amber-500/30 px-5 py-2 text-sm font-medium text-amber-400 transition-all hover:bg-amber-500/10 hover:border-amber-500/50"
+            className="ml-3 rounded-xl border border-amber-500/30 px-5 py-2 text-sm font-medium text-amber-400 transition-colors hover:bg-amber-500/10 hover:border-amber-500/50"
           >
             Admin
           </Link>
@@ -90,7 +90,7 @@ export function Header() {
       </nav>
 
       <div
-        className={`md:hidden transition-all duration-300 overflow-hidden ${
+        className={`md:hidden transition-[max-height,opacity] duration-300 overflow-hidden ${
           menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
@@ -101,8 +101,8 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`block rounded-xl px-4 py-2.5 text-sm font-medium transition-all ${
-                  isActive
+className={`block rounded-xl px-4 py-2.5 text-sm font-medium transition-colors ${
+                   isActive
                     ? "text-amber-400 bg-amber-500/10"
                     : "text-slate-300 hover:text-white hover:bg-white/5"
                 }`}
